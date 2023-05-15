@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lua</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+      box-sizing: border-box;
+            background: #090913;
+        }
+        img{
+            width: 25px;
+        }
+        .container {margin: 0 auto  ;
+            background: transparent;
+            width: 300px;
+            height: 533px;
+        }
+        #idnave {
+            position: absolute;
+            left:50%;
+            top: 0px;
+            
+        }
+        #status {
+            color: #f3f3f3;
+            position: absolute;
+            left:0;
+            top:0;
+            border: 1px solid gray;
+            padding:1em;
+            border-radius: 5px;
+        }
+        #planet {
+width: 100%;
+height: 300px;
+margin-top:0px;
+background-color: rgb(187, 187, 187);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="nave2.png" alt="" id="idnave" srcset="">
+      
+    </div>
+    <div id="planet"></div>
+   
+<div id="status">
+    
+</div>
+    <script>
+let alt = 500
+let fuel = 75
+let vel = 0
+let acel = 0
+let interval;
+
+let engine = false
+let liga = () => {
+    engine = true
+    document.getElementById("idnave").src = "nave1.png"
+    
+}
+document.addEventListener("mousedown" , liga)
+
+let desliga = () => {
+    engine = false
+    document.getElementById("idnave").src = "nave2.png"
+}
+document.addEventListener("mouseup" , desliga)
+
+
+let cicle = () => {
+alt = alt-1;
+document.getElementById("idnave").style.top = (500-alt)+'px'
+if(fuel <= 0 ) {
+    desliga()
+}
+if(engine) {
+    acel = 0.2; fuel --
+}else acel = -0.05;
+vel += acel;
+alt += vel
+
+if(alt <= 0){
+    if(vel <= -2.4){
+        alert("nave explodiu")
+    }
+    else alert("pouso bem sucedido")
+    clearInterval(interval)
+
+}
+document.getElementById("status").innerHTML = `velocidade : ${vel.toFixed(2)} <br/>combustivel : ${fuel} <br/> Gravidade:Baixa`
+}
+interval = window.setInterval(cicle , 100)
+
+    </script>
+</body>
+</html>
